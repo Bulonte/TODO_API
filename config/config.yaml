@@ -1,0 +1,28 @@
+server:
+  port: "8080"
+  mode: "debug"
+  read_timeout: 10
+  write_timeout: 10
+
+database:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "123456"
+  dbname: "todo_db"
+  charset: "utf8mb4"
+
+app:
+  name: "Go Todo API"
+  version: "1.0.0"
+  environment: "development"
+
+log:
+  level: "debug"
+  filename: "logs/app.log"
+
+jwt:
+  secret: "80935dbf88e306f1e41bca4feac0b38e1b448a91f71e61cfaa0bde148044f8db"
+  access_expire: 3600 #访问令牌 1小时
+  refresh_expire: 604800 #刷新令牌七天
+  issuer: "go-todo-api"

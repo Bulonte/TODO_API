@@ -1,0 +1,844 @@
+basePath: /api
+definitions:
+  request.BatchUpdateTodoRequest:
+    properties:
+      status:
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+      todo_ids:
+        items:
+          type: integer
+        minItems: 1
+        type: array
+    required:
+    - todo_ids
+    type: object
+  request.ChangePasswordRequest:
+    properties:
+      confirm_password:
+        type: string
+      new_password:
+        maxLength: 20
+        minLength: 6
+        type: string
+      old_password:
+        type: string
+    required:
+    - confirm_password
+    - new_password
+    - old_password
+    type: object
+  request.CreateTodoRequest:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      priority:
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        type: integer
+      status:
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+      title:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - title
+    type: object
+  request.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.RefreshTokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    required:
+    - refresh_token
+    type: object
+  request.RegisterRequest:
+    properties:
+      confirm_password:
+        type: string
+      email:
+        type: string
+      password:
+        maxLength: 20
+        minLength: 6
+        type: string
+      username:
+        maxLength: 50
+        minLength: 3
+        type: string
+    required:
+    - confirm_password
+    - email
+    - password
+    - username
+    type: object
+  request.UpdateProfileRequest:
+    properties:
+      avatar_url:
+        type: string
+      email:
+        type: string
+    type: object
+  request.UpdateTodoRequest:
+    properties:
+      description:
+        type: string
+      due_date:
+        type: string
+      priority:
+        enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        type: integer
+      status:
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+      title:
+        maxLength: 200
+        minLength: 1
+        type: string
+    required:
+    - title
+    type: object
+  request.UpdateTodoStatusRequest:
+    properties:
+      status:
+        enum:
+        - 0
+        - 1
+        - 2
+        type: integer
+    type: object
+  response.AuthResponse:
+    properties:
+      access_token:
+        type: string
+      expires_at:
+        type: integer
+      refresh_token:
+        type: string
+      user:
+        $ref: '#/definitions/response.UserResponse'
+    type: object
+  response.Pagination:
+    properties:
+      page:
+        type: integer
+      page_size:
+        type: integer
+      total:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  response.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  response.Statistics:
+    properties:
+      completed_count:
+        type: integer
+      in_progress_count:
+        type: integer
+      pending_count:
+        type: integer
+      total_count:
+        type: integer
+    type: object
+  response.TodoListResponse:
+    properties:
+      pagination:
+        $ref: '#/definitions/response.Pagination'
+      statistics:
+        $ref: '#/definitions/response.Statistics'
+      todos:
+        items:
+          $ref: '#/definitions/response.TodoResponse'
+        type: array
+    type: object
+  response.TodoResponse:
+    properties:
+      completed:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      due_date:
+        type: string
+      id:
+        type: integer
+      is_overdue:
+        type: boolean
+      priority:
+        type: integer
+      priority_text:
+        type: string
+      status:
+        type: integer
+      status_text:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  response.UserResponse:
+    properties:
+      avatar:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: 基于 Go + Gin 的待办事项管理系统 API
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Go Todo API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录获取访问令牌
+      parameters:
+      - description: 登录信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 用户登录
+      tags:
+      - 认证
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 使用刷新令牌获取新的访问令牌和刷新令牌
+      parameters:
+      - description: 刷新令牌信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RefreshTokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 刷新访问令牌
+      tags:
+      - 认证
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: 创建新用户账号
+      parameters:
+      - description: 注册信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.AuthResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 用户注册
+      tags:
+      - 认证
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: 检查服务的运行状态和基本信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 服务健康检查
+      tags:
+      - 系统
+  /ready:
+    get:
+      consumes:
+      - application/json
+      description: 检查服务是否已就绪并可处理请求（包括依赖组件状态）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: 服务就绪检查
+      tags:
+      - 系统
+  /todos:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前用户的待办事项列表，支持分页和筛选
+      parameters:
+      - default: 1
+        description: 页码
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      - description: '状态筛选: 0-待办, 1-进行中, 2-已完成'
+        in: query
+        name: status
+        type: integer
+      - description: '优先级筛选: 1-低, 2-中, 3-高, 4-紧急'
+        in: query
+        name: priority
+        type: integer
+      - description: 关键词搜索
+        in: query
+        name: keyword
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.TodoListResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 获取待办事项列表
+      tags:
+      - 待办事项
+    post:
+      consumes:
+      - application/json
+      description: 创建新的待办事项
+      parameters:
+      - description: 创建待办事项请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateTodoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.TodoResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 创建待办事项
+      tags:
+      - 待办事项
+  /todos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除指定的待办事项
+      parameters:
+      - description: 待办事项ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 删除待办事项
+      tags:
+      - 待办事项
+    get:
+      consumes:
+      - application/json
+      description: 根据ID获取特定的待办事项详情
+      parameters:
+      - description: 待办事项ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.TodoResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 获取待办事项详情
+      tags:
+      - 待办事项
+    put:
+      consumes:
+      - application/json
+      description: 更新指定的待办事项信息
+      parameters:
+      - description: 待办事项ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 更新待办事项请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateTodoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.TodoResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 更新待办事项
+      tags:
+      - 待办事项
+  /todos/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: 更新指定待办事项的状态
+      parameters:
+      - description: 待办事项ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 状态更新请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateTodoStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.TodoResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/response.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 更新待办事项状态
+      tags:
+      - 待办事项
+  /todos/batch-status:
+    patch:
+      consumes:
+      - application/json
+      description: 批量更新多个待办事项的状态
+      parameters:
+      - description: 批量更新请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.BatchUpdateTodoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 批量更新待办事项状态
+      tags:
+      - 待办事项
+  /user/change-password:
+    put:
+      consumes:
+      - application/json
+      description: 修改当前用户的登录密码
+      parameters:
+      - description: 密码修改请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 修改密码
+      tags:
+      - 用户
+  /user/profile:
+    get:
+      consumes:
+      - application/json
+      description: 获取当前已登录用户的个人信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UserResponse'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 获取当前用户信息
+      tags:
+      - 用户
+    put:
+      consumes:
+      - application/json
+      description: 更新当前用户的个人信息（如用户名、邮箱等）
+      parameters:
+      - description: 用户信息更新请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateProfileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UserResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      security:
+      - Bearer: []
+      summary: 更新用户信息
+      tags:
+      - 用户
+securityDefinitions:
+  Bearer:
+    description: 输入 "Bearer {token}" 进行认证
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

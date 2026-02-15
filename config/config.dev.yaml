@@ -1,0 +1,19 @@
+server:
+  port: "8080"
+  mode: "debug"
+
+database:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "123456"
+  dbname: "todo_db_dev"  # 开发环境用不同的数据库
+
+app:
+  name: "Go Todo API - 开发环境"
+  version: "1.0.0"
+  environment: "development"
+
+log:
+  level: "debug"
+  filename: "logs/app.dev.log"

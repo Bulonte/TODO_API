@@ -1,0 +1,19 @@
+server:
+  port: "80"
+  mode: "release"
+
+database:
+  host: "localhost"
+  port: "3306"
+  user: "root"
+  password: "secure_password"
+  dbname: "todo_db"
+
+app:
+  name: "Go Todo API"
+  version: "1.0.0"
+  environment: "production"
+
+log:
+  level: "info"
+  filename: "logs/app.log"
