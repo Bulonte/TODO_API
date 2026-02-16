@@ -145,3 +145,17 @@
 {"level":"info","timestamp":"2026-02-15T13:03:14.586+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/doc.json","ip":"::1"}
 {"level":"info","timestamp":"2026-02-15T13:03:35.204+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
 {"level":"info","timestamp":"2026-02-15T13:03:35.204+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-02-16T11:35:11.372+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-02-16T11:35:11.443+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-02-16T11:35:25.663+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:25.728+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/favicon.ico","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:34.826+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.033+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/index.html","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.062+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/swagger-ui.css","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.064+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/index.css","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.065+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/swagger-ui-bundle.js","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.065+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/swagger-ui-standalone-preset.js","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.066+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/swagger-initializer.js","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:42.166+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/doc.json","ip":"::1"}
+{"level":"info","timestamp":"2026-02-16T11:35:49.307+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-02-16T11:35:49.307+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
