@@ -5,8 +5,8 @@ import (
 	"TODO_API/internal/app/dto/response"
 	"TODO_API/internal/domain/model"
 	"TODO_API/internal/repository"
+	"TODO_API/pkg/errors"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -130,12 +130,12 @@ func (s *todoService) GetTodoByID(ctx context.Context, id, userID uint) (*respon
 	}
 
 	if todo == nil {
-		return nil, errors.New("待办事项不存在")
+		return nil, errors.NotFound("待办事项不存在", nil)
 	}
 
 	//检查权限
 	if todo.UserID != userID {
-		return nil, errors.New("无权限访问此待办事项")
+		return nil, errors.Forbidden("无权限访问此待办事项", nil)
 	}
 
 	return s.todoToResponse(todo), nil
@@ -186,12 +186,12 @@ func (s *todoService) UpdateTodo(ctx context.Context, id, userID uint, req *requ
 	}
 
 	if todo == nil {
-		return nil, errors.New("待办事项不存在")
+		return nil, errors.NotFound("待办事项不存在", nil)
 	}
 
 	//检查权限
 	if todo.UserID != userID {
-		return nil, errors.New("无权限修改此待办事项")
+		return nil, errors.Forbidden("无权限修改此待办事项", nil)
 	}
 
 	if req.Title != "" {
@@ -231,11 +231,11 @@ func (s *todoService) DeleteTodo(ctx context.Context, id, userID uint) error {
 	}
 
 	if todo == nil {
-		return errors.New("待办事项不存在")
+		return errors.NotFound("待办事项不存在", nil)
 	}
 
 	if todo.UserID != userID {
-		return errors.New("无权限删除此待办事项")
+		return errors.Forbidden("无权限删除此待办事项", nil)
 	}
 
 	return s.todoRepo.Delete(ctx, id)
@@ -249,11 +249,11 @@ func (s *todoService) UpdateTodoStatus(ctx context.Context, id, userID uint, sta
 	}
 
 	if todo == nil {
-		return nil, errors.New("待办事项不存在")
+		return nil, errors.NotFound("待办事项不存在", nil)
 	}
 
 	if todo.UserID != userID {
-		return nil, errors.New("无权限修改此待办事项")
+		return nil, errors.Forbidden("无权限修改此待办事项", nil)
 	}
 
 	todo.Status = model.TodoStatus(status)
@@ -273,5 +273,8 @@ func (s *todoService) UpdateTodoStatus(ctx context.Context, id, userID uint, sta
 
 // BatchUpdateStatus 批量更新状态
 func (s *todoService) BatchUpdateStatus(ctx context.Context, userID uint, req *request.BatchUpdateTodoRequest) error {
+	if req.Status == nil {
+		return errors.BadRequest("状态不能为空", nil)
+	}
 	return s.todoRepo.BatchUpdateStatus(ctx, userID, req.TodoIDs, model.TodoStatus(*req.Status))
 }

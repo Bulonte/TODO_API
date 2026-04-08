@@ -7,9 +7,9 @@ import (
 	"TODO_API/internal/domain/model"
 	"TODO_API/internal/repository"
 	"TODO_API/pkg/encryption"
+	"TODO_API/pkg/errors"
 	"TODO_API/pkg/jwt"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -64,13 +64,13 @@ func (s *authService) Register(ctx context.Context, req *request.RegisterRequest
 	//检查用户名是否存在
 	exitingUser, _ := s.userRepo.GetByUsername(ctx, req.Username)
 	if exitingUser != nil {
-		return nil, errors.New("用户名已存在")
+		return nil, errors.BadRequest("用户名已存在", nil)
 	}
 
 	//检查邮箱是否存在
 	exitingUser, _ = s.userRepo.GetByEmail(ctx, req.Email)
 	if exitingUser != nil {
-		return nil, errors.New("邮箱已存在")
+		return nil, errors.BadRequest("邮箱已存在", nil)
 	}
 
 	//密码加密
@@ -87,7 +87,7 @@ func (s *authService) Register(ctx context.Context, req *request.RegisterRequest
 		Status:       1,
 	}
 
-	//err = s.userRepo.Create(ctx, User)
+
 	if err = s.userRepo.Create(ctx, User); err != nil {
 		return nil, err
 	}
@@ -101,17 +101,17 @@ func (s *authService) Login(ctx context.Context, req *request.LoginRequest) (*re
 	//获取用户
 	user, err := s.userRepo.GetByUsername(ctx, req.Username)
 	if err != nil || user == nil {
-		return nil, errors.New("用户名或密码错误")
+		return nil, errors.Unauthorized("用户名或密码错误", nil)
 	}
 
 	//验证密码
 	if !encryption.CheckPasswordHash(req.Password, user.PasswordHash) {
-		return nil, errors.New("用户名或密码错误")
+		return nil, errors.Unauthorized("用户名或密码错误", nil)
 	}
 
 	//检查用户状态
 	if user.Status == 0 {
-		return nil, errors.New("用户已被封禁")
+		return nil, errors.Forbidden("用户已被封禁", nil)
 	}
 
 	//返回带token的用户信息
@@ -122,19 +122,19 @@ func (s *authService) Login(ctx context.Context, req *request.LoginRequest) (*re
 func (s *authService) RefreshToken(ctx context.Context, refreshToken string) (*response.AuthResponse, error) {
 	newAccessToken, err := jwt.RefreshToken(refreshToken)
 	if err != nil {
-		return nil, errors.New("刷新令牌无效")
+		return nil, errors.Unauthorized("刷新令牌无效", err)
 	}
 
 	//解析令牌
 	claims, err := jwt.ParseToken(newAccessToken)
 	if err != nil {
-		return nil, err
+		return nil, errors.Unauthorized("令牌解析失败", err)
 	}
 
 	//获取用户信息
 	user, err := s.userRepo.GetByID(ctx, claims.UserID)
 	if err != nil || user == nil {
-		return nil, errors.New("用户不存在")
+		return nil, errors.NotFound("用户不存在", err)
 	}
 
 	expiresAt := time.Now().Add(time.Duration(config.GlobalConfig.JWT.AccessExpire) * time.Second).Unix()

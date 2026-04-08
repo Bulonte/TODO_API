@@ -1,6 +1,7 @@
 package model
 
 import (
+	"TODO_API/internal/domain/event"
 	"time"
 
 	"gorm.io/gorm"
@@ -40,11 +41,29 @@ type Todo struct {
 
 	// 关联用户
 	User User `gorm:"foreignKey:UserID" json:"user,omitempty"`
+
+	// 事件列表（不存储到数据库）
+	Events []event.DomainEvent `gorm:"-" json:"-"`
 }
 
 // TableName 指定表名
 func (Todo) TableName() string {
 	return "todos"
+}
+
+// AddEvent 添加事件
+func (t *Todo) AddEvent(e event.DomainEvent) {
+	t.Events = append(t.Events, e)
+}
+
+// GetEvents 获取事件列表
+func (t *Todo) GetEvents() []event.DomainEvent {
+	return t.Events
+}
+
+// ClearEvents 清空事件列表
+func (t *Todo) ClearEvents() {
+	t.Events = []event.DomainEvent{}
 }
 
 // IsCompleted 检查是否已完成

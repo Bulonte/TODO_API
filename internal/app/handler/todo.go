@@ -5,6 +5,7 @@ import (
 	"TODO_API/internal/app/middleware"
 	"TODO_API/internal/service"
 	"TODO_API/pkg/response"
+	"TODO_API/pkg/validator"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +37,9 @@ func (h *TodoHandler) CreateTodo(c *gin.Context) {
 	userID := middleware.GetUserIDFromContext(c)
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误"+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
+		return
 	}
 
 	todo, err := h.todoService.Create(c.Request.Context(), userID, &req)
@@ -106,7 +109,8 @@ func (h *TodoHandler) GetTodos(c *gin.Context) {
 	var query request.TodoQueryRequest
 	userID := middleware.GetUserIDFromContext(c)
 	if err := c.ShouldBindQuery(&query); err != nil {
-		response.BadRequest(c, "参数错误"+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 
@@ -145,7 +149,8 @@ func (h *TodoHandler) UpdateTodo(c *gin.Context) {
 
 	var req request.UpdateTodoRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误: "+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 
@@ -216,7 +221,7 @@ func (h *TodoHandler) DeleteTodo(c *gin.Context) {
 // @Failure 403 {object} response.Response
 // @Failure 404 {object} response.Response
 // @Failure 500 {object} response.Response
-// @Router /todos/{id}/status [patch]
+// @Router /todos/{id}/status [put]
 func (h *TodoHandler) UpdateTodoStatus(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 64)
@@ -227,7 +232,8 @@ func (h *TodoHandler) UpdateTodoStatus(c *gin.Context) {
 
 	var req request.UpdateTodoStatusRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误: "+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 	userID := middleware.GetUserIDFromContext(c)
@@ -257,12 +263,13 @@ func (h *TodoHandler) UpdateTodoStatus(c *gin.Context) {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 500 {object} response.Response
-// @Router /todos/batch-status [patch]
+// @Router /todos/batch-status [put]
 func (h *TodoHandler) BatchUpdateStatus(c *gin.Context) {
 	var req request.BatchUpdateTodoRequest
 	userID := middleware.GetUserIDFromContext(c)
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误: "+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 

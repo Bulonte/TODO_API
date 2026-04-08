@@ -27,7 +27,7 @@ func NewUserHandeler(userService service.UserService) *UserHandeler {
 // @Success 200 {object} response.Response{data=response.UserResponse}
 // @Failure 401 {object} response.Response
 // @Failure 500 {object} response.Response
-// @Router /user/profile [get]
+// @Router /users/me [get]
 func (u *UserHandeler) GetProfile(c *gin.Context) {
 	userID := middleware.GetUserIDFromContext(c)
 
@@ -51,7 +51,7 @@ func (u *UserHandeler) GetProfile(c *gin.Context) {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 500 {object} response.Response
-// @Router /user/profile [put]
+// @Router /users/me [put]
 func (u *UserHandeler) UpdateProfile(c *gin.Context) {
 	var req request.UpdateProfileRequest
 	userID := middleware.GetUserIDFromContext(c)
@@ -80,7 +80,7 @@ func (u *UserHandeler) UpdateProfile(c *gin.Context) {
 // @Failure 400 {object} response.Response
 // @Failure 401 {object} response.Response
 // @Failure 500 {object} response.Response
-// @Router /user/change-password [put]
+// @Router /users/me/password [put]
 func (u *UserHandeler) ChangePassword(c *gin.Context) {
 	var req request.ChangePasswordRequest
 	userID := middleware.GetUserIDFromContext(c)

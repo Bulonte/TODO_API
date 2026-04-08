@@ -1,6 +1,7 @@
 package model
 
 import (
+	"TODO_API/internal/domain/event"
 	"time"
 
 	"gorm.io/gorm"
@@ -17,8 +18,27 @@ type User struct {
 	CreatedAt    time.Time      `json:"created_at"`
 	UpdatedAt    time.Time      `json:"updated_at"`
 	DeletedAt    gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+
+	// 事件列表（不存储到数据库）
+	Events []event.DomainEvent `gorm:"-" json:"-"`
 }
 
 func (User) TableName() string {
 	return "users"
 }
+
+// AddEvent 添加事件
+func (u *User) AddEvent(e event.DomainEvent) {
+	u.Events = append(u.Events, e)
+}
+
+// GetEvents 获取事件列表
+func (u *User) GetEvents() []event.DomainEvent {
+	return u.Events
+}
+
+// ClearEvents 清空事件列表
+func (u *User) ClearEvents() {
+	u.Events = []event.DomainEvent{}
+}
+

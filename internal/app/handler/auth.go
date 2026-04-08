@@ -4,6 +4,7 @@ import (
 	"TODO_API/internal/app/dto/request"
 	"TODO_API/internal/service"
 	"TODO_API/pkg/response"
+	"TODO_API/pkg/validator"
 
 	_ "TODO_API/docs" // 导入Swagger文档
 
@@ -35,7 +36,8 @@ func (h *AuthHandler) Register(c *gin.Context) {
 
 	//绑定并验证请求参数
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误"+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 
@@ -71,7 +73,8 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	//绑定参数并验证
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 
@@ -105,7 +108,8 @@ func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	var req request.RefreshTokenRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		response.BadRequest(c, "参数错误"+err.Error())
+		errorMsg := validator.GetValidationError(err)
+		response.BadRequest(c, errorMsg)
 		return
 	}
 

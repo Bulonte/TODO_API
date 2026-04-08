@@ -45,12 +45,36 @@ type JWTConfig struct {
 	Issuer        string `mapstructure:"issuer"`
 }
 
+// Redis配置
+type RedisConfig struct {
+	Addr     string `mapstructure:"addr"`
+	Password string `mapstructure:"password"`
+	DB       int    `mapstructure:"db"`
+}
+
+// RabbitMQ配置
+type RabbitMQConfig struct {
+	Addr     string `mapstructure:"addr"`
+	Username string `mapstructure:"username"`
+	Password string `mapstructure:"password"`
+	VHost    string `mapstructure:"vhost"`
+}
+
+// Storage配置
+type StorageConfig struct {
+	BasePath string `mapstructure:"base_path"`
+	BaseURL  string `mapstructure:"base_url"`
+}
+
 type Config struct {
 	Server   ServerConfig   `mapstructure:"server"`
 	Database DatabaseConfig `mapstructure:"database"`
 	App      AppConfig      `mapstructure:"app"`
 	Log      LogConfig      `mapstructure:"log"`
 	JWT      JWTConfig      `mapstructure:"jwt"`
+	Redis    RedisConfig    `mapstructure:"redis"`
+	RabbitMQ RabbitMQConfig `mapstructure:"rabbitmq"`
+	Storage  StorageConfig  `mapstructure:"storage"`
 }
 
 var GlobalConfig Config

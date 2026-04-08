@@ -8,7 +8,7 @@ type CreateTodoRequest struct {
 	Description string     `json:"description,omitempty"`
 	Status      uint8      `json:"status,omitempty" binding:"oneof=0 1 2"`
 	Priority    uint8      `json:"priority,omitempty" binding:"oneof=1 2 3 4"`
-	DueDate     *time.Time `json:"due_date,omitempty"`
+	DueDate     *time.Time `json:"due_date,omitempty" binding:"omitempty,future_date,date_range"`
 }
 
 // UpdateTodoRequest 更新待办事项请求
@@ -17,7 +17,7 @@ type UpdateTodoRequest struct {
 	Description string     `json:"description,omitempty"`
 	Status      *uint8     `json:"status,omitempty" binding:"oneof=0 1 2"`
 	Priority    *uint8     `json:"priority,omitempty" binding:"oneof=1 2 3 4"`
-	DueDate     *time.Time `json:"due_date,omitempty"`
+	DueDate     *time.Time `json:"due_date,omitempty" binding:"omitempty,future_date,date_range"`
 }
 
 // TodoQueryRequest 待办事项查询请求

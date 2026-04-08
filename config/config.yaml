@@ -5,8 +5,8 @@ server:
   write_timeout: 10
 
 database:
-  host: "localhost"
-  port: "3306"
+  host: "mysql"  # 使用 Docker 服务名
+  port: "3307"
   user: "root"
   password: "123456"
   dbname: "todo_db"
@@ -26,3 +26,18 @@ jwt:
   access_expire: 3600 #访问令牌 1小时
   refresh_expire: 604800 #刷新令牌七天
   issuer: "go-todo-api"
+
+redis:
+  addr: "redis:6379"  # 使用 Docker 服务名
+  password: ""
+  db: 0
+
+rabbitmq:
+  addr: "rabbitmq:5672"  # 使用 Docker 服务名
+  username: "guest"
+  password: "guest"
+  vhost: "/"
+
+storage:
+  base_path: "./uploads"
+  base_url: "http://localhost:8080/uploads"

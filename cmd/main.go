@@ -6,9 +6,14 @@ import (
 	"TODO_API/internal/app/middleware"
 	"TODO_API/internal/repository"
 	"TODO_API/internal/service"
+	"TODO_API/pkg/cache"
 	"TODO_API/pkg/database"
 	"TODO_API/pkg/jwt"
 	"TODO_API/pkg/logger"
+	"TODO_API/pkg/mq"
+	"TODO_API/pkg/storage"
+	"TODO_API/pkg/token"
+	"TODO_API/pkg/validator"
 	"context"
 	"log"
 	"net/http"
@@ -26,6 +31,9 @@ import (
 
 // 配置路由
 func setupRouter(r *gin.Engine, h *handler.Healther, a *handler.AuthHandler, u *handler.UserHandeler, t *handler.TodoHandler) {
+	// 添加文件静态路由
+	r.Static("/uploads", "./uploads")
+
 	// 添加Swagger文档路由（仅在开发环境）
 	if config.GlobalConfig.App.Environment == "development" {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -92,7 +100,7 @@ func setupRouter(r *gin.Engine, h *handler.Healther, a *handler.AuthHandler, u *
 
 				// 状态操作
 				todos.PUT("/:id/status", t.UpdateTodoStatus)    // 更新状态
-				todos.PUT("/batch/status", t.BatchUpdateStatus) // 批量更新状态
+				todos.PUT("/batch-status", t.BatchUpdateStatus) // 批量更新状态
 			}
 		}
 
@@ -127,6 +135,8 @@ func setupBasicMiddleWare(g *gin.Engine) {
 	})
 	//恢复中间件
 	g.Use(gin.Recovery())
+	//错误处理中间件
+	g.Use(middleware.ErrorHandler())
 }
 
 // 启动服务器
@@ -196,9 +206,6 @@ func main() {
 	configPath := os.Getenv("CONFIG_PATH")
 	config.InitConfig(configPath)
 
-	//初始化JWT
-	jwt.InitJWT()
-
 	//初始化日志
 	logger.InitLogger(config.GlobalConfig.Log.Level, config.GlobalConfig.Log.Filename)
 	logger.Info("应用程序启动",
@@ -216,28 +223,77 @@ func main() {
 	}
 	defer database.CloseMysql()
 
+	//初始化Redis
+	redisConfig := config.GlobalConfig.Redis
+	redisClient := cache.NewRedisClient(redisConfig.Addr, redisConfig.Password, redisConfig.DB)
+	if err := redisClient.Ping(context.Background()); err != nil {
+		logger.Error("Redis连接失败，将继续运行但某些功能可能不可用", zap.Error(err))
+	} else {
+		defer redisClient.Close()
+		logger.Info("Redis连接成功")
+	}
+
+	//初始化RabbitMQ
+	rmqConfig := config.GlobalConfig.RabbitMQ
+	rabbitMQClient, rmqErr := mq.NewRabbitMQClient(rmqConfig.Addr, rmqConfig.Username, rmqConfig.Password, rmqConfig.VHost)
+	if rmqErr != nil {
+		logger.Error("RabbitMQ连接失败，将继续运行但某些功能可能不可用", zap.Error(rmqErr))
+	} else {
+		defer rabbitMQClient.Close()
+		logger.Info("RabbitMQ连接成功")
+	}
+
+	//初始化文件存储
+	storageConfig := config.GlobalConfig.Storage
+	_ = storage.NewLocalStorage(storageConfig.BasePath, storageConfig.BaseURL)
+	logger.Info("文件存储初始化成功")
+
+	//初始化JWT
+	jwt.InitJWT()
+
+	//初始化验证器
+	validator.InitValidator()
+
+	//初始化token管理器
+	tokenManager := token.NewRedisTokenManager(redisClient)
+	jwt.SetTokenManager(tokenManager)
+
+	//初始化事件处理器
+	eventHandler := mq.NewDefaultEventHandler()
+
+	//初始化消费者
+	if rabbitMQClient != nil {
+		consumer := mq.NewRabbitMQConsumer(rabbitMQClient, "todo-events", "todo-events-queue", "#", eventHandler)
+
+		//启动消费者
+		consumer.Start(context.Background())
+		defer consumer.Stop()
+	}
+
 	//设置gin模式
 	gin.SetMode(config.GlobalConfig.Server.Mode)
 
-	//创建gin实例
-	r := gin.Default()
-
-	//添加基础中间件
-	setupBasicMiddleWare(r)
-
-	//初始化依赖注入
+	// 初始化依赖注入
 	userRepo := repository.NewUserRepository(database.GetDB())
+	userRepoWithCache := repository.NewUserRepositoryCache(userRepo, redisClient)
 	todoRepo := repository.NewTodoRepository(database.GetDB())
 
-	authService := service.NewAuthService(userRepo)
-	userService := service.NewUserService(userRepo)
+	authService := service.NewAuthService(userRepoWithCache)
+	userService := service.NewUserService(userRepoWithCache)
 	todoService := service.NewTodoService(todoRepo)
 
 	authHandler := handler.NewAuthHandler(authService)
 	userHandler := handler.NewUserHandeler(userService)
 	todoHandler := handler.NewTodoHandler(todoService)
 	healthHandler := handler.NewHealther()
-	//设置路由
+
+	// 创建 gin 实例
+	r := gin.Default()
+
+	// 配置基础中间件
+	setupBasicMiddleWare(r)
+
+	// 设置路由
 	setupRouter(r, healthHandler, authHandler, userHandler, todoHandler)
 
 	//启动服务器

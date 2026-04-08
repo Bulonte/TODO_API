@@ -159,3 +159,88 @@
 {"level":"info","timestamp":"2026-02-16T11:35:42.166+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/swagger/doc.json","ip":"::1"}
 {"level":"info","timestamp":"2026-02-16T11:35:49.307+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
 {"level":"info","timestamp":"2026-02-16T11:35:49.307+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-02-20T18:11:48.731+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-02-20T18:11:48.797+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-02-20T18:11:54.814+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"POST","path":"/api/auth/register","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:11:55.077+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/api/todos","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:12:05.068+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/api/todos","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:12:09.087+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/api/todos","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:12:35.996+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/api/todos","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:12:43.889+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/api/todos","ip":"::1"}
+{"level":"info","timestamp":"2026-02-20T18:12:51.348+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-02-20T18:12:51.348+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-01T20:14:30.135+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:14:30.157+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:15:21.058+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-01T20:15:21.058+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-01T20:16:46.249+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:16:46.267+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:16:55.884+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-01T20:17:05.023+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-01T20:17:05.023+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-01T20:35:25.981+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:35:26.003+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-01T20:36:38.818+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-01T20:36:38.819+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:05:31.659+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:05:36.738+0800","caller":"logger/logger.go:69","msg":"Redis连接失败","error":"dial tcp 192.168.96.128:6379: i/o timeout","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:06:52.599+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:06:57.611+0800","caller":"logger/logger.go:69","msg":"Redis连接失败，将继续运行但某些功能可能不可用","error":"dial tcp 192.168.96.128:6379: i/o timeout","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"error","timestamp":"2026-04-07T16:06:57.616+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:06:57.618+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:06:57.618+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:07:55.246+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:07:55.307+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/favicon.ico","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:08:14.027+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:08:14.027+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:10:18.753+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:10:23.765+0800","caller":"logger/logger.go:69","msg":"Redis连接失败，将继续运行但某些功能可能不可用","error":"dial tcp 192.168.96.128:6379: i/o timeout","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"error","timestamp":"2026-04-07T16:10:23.771+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:10:23.773+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:10:23.775+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:13:55.495+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:13:55.499+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:13:58.853+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:13:58.874+0800","caller":"logger/logger.go:69","msg":"Redis连接失败，将继续运行但某些功能可能不可用","error":"NOAUTH Authentication required.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"error","timestamp":"2026-04-07T16:13:58.875+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:13:58.875+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:13:58.877+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:14:21.489+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:14:21.490+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:14:26.193+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:14:26.210+0800","caller":"logger/logger.go:69","msg":"Redis连接失败，将继续运行但某些功能可能不可用","error":"NOAUTH Authentication required.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"error","timestamp":"2026-04-07T16:14:26.211+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:14:26.211+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:14:26.212+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:14:38.613+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:14:40.781+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:14:41.787+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:14:42.639+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:14:43.474+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:14:44.188+0800","caller":"logger/logger.go:61","msg":"Http请求","method":"GET","path":"/","ip":"::1"}
+{"level":"info","timestamp":"2026-04-07T16:15:33.162+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:15:33.163+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:16:26.295+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:16:26.316+0800","caller":"logger/logger.go:61","msg":"Redis连接成功"}
+{"level":"error","timestamp":"2026-04-07T16:16:26.317+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:16:26.318+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:16:26.319+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:17:12.750+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:17:12.751+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T16:49:59.625+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T16:50:01.734+0800","caller":"logger/logger.go:69","msg":"Redis连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:6379: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:230\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"error","timestamp":"2026-04-07T16:50:01.737+0800","caller":"logger/logger.go:69","msg":"RabbitMQ连接失败，将继续运行但某些功能可能不可用","error":"dial tcp [::1]:5672: connectex: No connection could be made because the target machine actively refused it.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:240\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T16:50:01.737+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T16:50:01.737+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T16:51:21.534+0800","caller":"logger/logger.go:61","msg":"正在关闭服务器"}
+{"level":"info","timestamp":"2026-04-07T16:51:21.534+0800","caller":"logger/logger.go:61","msg":"服务器关闭成功"}
+{"level":"info","timestamp":"2026-04-07T17:28:39.392+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T17:28:46.651+0800","caller":"logger/logger.go:69","msg":"数据库连接失败","error":"数据库连接失败：: dial tcp: lookup mysql: no such host","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:221\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T17:30:05.946+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T17:30:13.216+0800","caller":"logger/logger.go:69","msg":"数据库连接失败","error":"数据库连接失败：: dial tcp: lookup mysql: no such host","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.main\n\tD:/work/GoProjects/TODO_API/cmd/main.go:221\nruntime.main\n\tD:/work/Go/src/runtime/proc.go:285"}
+{"level":"info","timestamp":"2026-04-07T17:33:30.109+0800","caller":"logger/logger.go:61","msg":"应用程序启动","app":"Go Todo API","version":"1.0.0","environment":"development"}
+{"level":"info","timestamp":"2026-04-07T17:33:30.137+0800","caller":"logger/logger.go:61","msg":"Redis连接成功"}
+{"level":"info","timestamp":"2026-04-07T17:33:30.183+0800","caller":"logger/logger.go:61","msg":"RabbitMQ连接成功"}
+{"level":"info","timestamp":"2026-04-07T17:33:30.183+0800","caller":"logger/logger.go:61","msg":"文件存储初始化成功"}
+{"level":"info","timestamp":"2026-04-07T17:33:30.190+0800","caller":"logger/logger.go:61","msg":"服务器启动信息","address":"http://localhost:8080","mode":"debug","environment":"development"}
+{"level":"error","timestamp":"2026-04-07T17:33:30.190+0800","caller":"logger/logger.go:69","msg":"服务器启动失败","error":"listen tcp :8080: bind: Only one usage of each socket address (protocol/network address/port) is normally permitted.","stacktrace":"TODO_API/pkg/logger.Error\n\tD:/work/GoProjects/TODO_API/pkg/logger/logger.go:69\nmain.startSever.func1\n\tD:/work/GoProjects/TODO_API/cmd/main.go:165"}
